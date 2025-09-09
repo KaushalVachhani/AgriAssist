@@ -1,4 +1,4 @@
-# Farm AI Assistant
+# Farm AI Assistant with Audio and Image support
 
 - Bilingual (English/Hindi) web app for practical farming advice.
 - Accepts queries via text, image, or audio and responds in Hindi (text and audio).
