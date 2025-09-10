@@ -10,7 +10,7 @@ def load_env_and_models() -> Any:
     Returns the initialized generative model.
     """
     load_dotenv()
-    required_vars = ["GROQ_API_KEY", "GOOGLE_API_KEY", "ELEVENLABS_API_KEY"]
+    required_vars = ["GROQ_API_KEY", "GOOGLE_API_KEY"]
     for var in required_vars:
         if not os.getenv(var):
             raise ValueError(f"Please set the {var} environment variable.")
