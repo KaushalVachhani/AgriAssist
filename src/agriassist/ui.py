@@ -1,6 +1,6 @@
 import gradio as gr
-from app.handlers import validate_and_handle
-from app.config import load_env_and_models
+from agriassist.handlers import validate_and_handle
+from agriassist.config import load_env_and_models
 
 model = load_env_and_models()
 
@@ -61,7 +61,7 @@ def launch_app() -> None:
             <p align="center">Powered by AI for a greener future. | बेहतर भविष्य के लिए AI द्वारा संचालित।</p>
             """
         )
-    demo.launch()
+    demo.launch(server_name="0.0.0.0", server_port=7860, share=True)
 
 if __name__ == "__main__":
     launch_app()

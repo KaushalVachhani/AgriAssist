@@ -54,8 +54,8 @@ def handle_multimodal_query(
         response = model.generate_content(prompt_parts)
         ai_text_response = response.text
         logger.info("AI Response generated: %s", ai_text_response)
-        output_dir = "generated_speech_responses"
-        
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        output_dir = os.path.join(project_root, "generated_speech_responses")        
         os.makedirs(output_dir, exist_ok=True)
         output_filepath = os.path.join(output_dir, f"speech_response_{question_id}.mp3")
         text_to_speech_with_gtts(input_text=ai_text_response, output_filepath=output_filepath)
