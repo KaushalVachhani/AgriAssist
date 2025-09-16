@@ -1,16 +1,26 @@
-# Python-generated files
+# Python
 __pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
+*.py[cod]
+*.pyo
+*.pyd
 
-# Virtual environments
-.venv
-
-# Environment files
+# Environments
 .env
+.env.*
+.venv/
+venv/
 
-# Gradio specific
-*.gradio/
+# VSCode
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated files
+src/generated_speech_responses/
+
+# Temp
+*.tmp
+*~
+tempCodeRunnerFile.py

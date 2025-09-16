@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌾 Farm AI Assistant | खेत सहायक AI</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">🌾 Farm AI Assistant</div>
+        <div class="subtitle">खेत सहायक AI</div>
+    </nav>
+    <main>
+        <section class="card">
+            <h1>Ask Your Farming Question</h1>
+            <form id="queryForm">
+                <div class="form-group">
+                    <label for="textInput">Describe your farming issue:</label>
+                    <textarea id="textInput" name="text" placeholder="e.g., 'My tomato plant leaves are turning yellow.'"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="imageInput">Upload an image of the plant (optional):</label>
+                    <input type="file" id="imageInput" name="image" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label for="audioInput">Record your question (optional):</label>
+                    <input type="file" id="audioInput" name="audio" accept="audio/*">
+                </div>
+                <button type="submit" id="submitBtn">Get My Solution</button>
+                <div id="spinner" class="spinner" style="display:none;"></div>
+            </form>
+        </section>
+        <section class="card response-card">
+            <h2>AI Response</h2>
+            <div id="textResponse" class="response-text"></div>
+            <audio id="audioResponse" controls style="display:none;"></audio>
+        </section>
+    </main>
+    <footer>
+        <hr>
+        <p>Powered by AI for a greener future. | बेहतर भविष्य के लिए AI द्वारा संचालित।</p>
+    </footer>
+    <script src="main.js"></script>
+</body>
+</html>

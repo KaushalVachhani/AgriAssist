@@ -1,67 +1,64 @@
-import gradio as gr
+"""
+FastAPI app for Farm AI Assistant | खेत सहायक AI
+Serves API endpoints and static frontend files.
+"""
+
+import shutil
+from pathlib import Path
+from fastapi import FastAPI, UploadFile, File, Form
+from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from agriassist.handlers import validate_and_handle
 from agriassist.config import load_env_and_models
 
+# Load model once at startup
 model = load_env_and_models()
 
-def launch_app() -> None:
-    """
-    Launch the Gradio web application for the Farm AI Assistant.
-    """
-    theme = gr.themes.Ocean()
-    with gr.Blocks(theme=theme, title="Farm AI Assistant | खेत सहायक AI") as demo:
-        gr.Markdown(
-            """
-            <div style="text-align: center;">
-                <h1 style="font-size: 3em; color: #4CAF50;">🌾 Farm AI Assistant | खेत सहायक AI</h1>
-                <p style="font-size: 1.2em; color: #7f8c8d; margin-top: -10px;">Your Personal Farming Companion | आपका व्यक्तिगत कृषि साथी</p>
-            </div>
-            """
-        )
-        with gr.Row():
-            with gr.Column(scale=1):
-                gr.Markdown("#### 📥 Input Your Query | अपनी समस्या बताएं")
-                text_box = gr.Textbox(
-                    label="Describe your farming issue: | अपनी कृषि समस्या का वर्णन करें:",
-                    placeholder="e.g., 'My tomato plant leaves are turning yellow.' | उदाहरण: 'मेरे टमाटर के पौधों की पत्तियां पीली हो रही हैं।'",
-                    interactive=True
-                )
-                image_box = gr.Image(
-                    type="pil",
-                    label="Upload an image of the plant (optional): | पौधे की तस्वीर अपलोड करें (वैकल्पिक):",
-                    interactive=True
-                )
-                audio_box = gr.Audio(
-                    label="Record your question (optional): | अपना प्रश्न रिकॉर्ड करें (वैकल्पिक):",
-                    sources=["microphone"],
-                    interactive=True,
-                    type="filepath"
-                )
-                submit_btn = gr.Button("Get My Solution | समाधान प्राप्त करें", variant="primary")
-            with gr.Column(scale=1):
-                gr.Markdown("#### 💬 AI Response | AI प्रतिक्रिया")
-                text_output = gr.Textbox(
-                    label="AI Response (Text): | AI प्रतिक्रिया (पाठ):",
-                    placeholder="The AI's response will appear here... | AI की प्रतिक्रिया यहां दिखाई देगी...",
-                    interactive=False
-                )
-                audio_output = gr.Audio(
-                    label="AI Response (Audio): | AI प्रतिक्रिया (ऑडियो):",
-                    interactive=False,
-                    type="filepath"
-                )
-        submit_btn.click(
-            fn=lambda text, img, audio: validate_and_handle(text, img, audio, model=model),
-            inputs=[text_box, image_box, audio_box],
-            outputs=[text_output, audio_output]
-        )
-        gr.Markdown(
-            """
-            ---
-            <p align="center">Powered by AI for a greener future. | बेहतर भविष्य के लिए AI द्वारा संचालित।</p>
-            """
-        )
-    demo.launch(server_name="0.0.0.0", server_port=7860, share=True)
+app = FastAPI(title="Farm AI Assistant | खेत सहायक AI")
+
+# CORS for frontend-backend communication
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Directory for generated audio responses
+AUDIO_DIR = Path(__file__).parent / "generated_speech_responses"
+AUDIO_DIR.mkdir(exist_ok=True)
+
+@app.post("/api/query")
+async def query(
+    text: str = Form(None),
+    image: UploadFile = File(None),
+    audio: UploadFile = File(None)
+):
+    image_path = None
+    audio_path = None
+    if image and image.filename:
+        image_path = f"/tmp/{image.filename}"
+        with open(image_path, "wb") as buffer:
+            shutil.copyfileobj(image.file, buffer)
+    if audio and audio.filename:
+        audio_path = f"/tmp/{audio.filename}"
+        with open(audio_path, "wb") as buffer:
+            shutil.copyfileobj(audio.file, buffer)
+    text_response, audio_response = validate_and_handle(text, image_path, audio_path, model=model)
+    audio_url = None
+    if audio_response:
+        audio_filename = Path(audio_response).name
+        audio_url = f"/audio/{audio_filename}"
+    result = {"text": text_response, "audio": audio_url}
+    return JSONResponse(result)
+
+# Mount static frontend and audio files
+FRONTEND_DIR = Path(__file__).parent.parent.parent / "frontend"
+app.mount("/audio", StaticFiles(directory=str(AUDIO_DIR)), name="audio")
+app.mount("/", StaticFiles(directory=str(FRONTEND_DIR), html=True), name="static")
 
 if __name__ == "__main__":
-    launch_app()
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=7860)

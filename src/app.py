@@ -1,4 +1,5 @@
-from agriassist.ui import launch_app
+from agriassist.ui import app
 
 if __name__ == "__main__":
-    launch_app()
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=7862)
