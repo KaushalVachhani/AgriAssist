@@ -24,3 +24,6 @@ src/generated_speech_responses/
 *.tmp
 *~
 tempCodeRunnerFile.py
+
+# Gradio
+.gradio/
