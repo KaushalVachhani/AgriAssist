@@ -21,7 +21,7 @@ AgriAssist is a production-ready, AI-powered farming assistant that provides exp
 ### Production Features
 - 🔒 **Security First**: Rate limiting, file validation, CORS protection
 - 📱 **Premium UI**: Modern, responsive design with dark mode support
-- ⚡ **Performance**: Optimized Docker builds and async processing
+- ⚡ **Performance**: Production-ready Docker builds with smart path resolution
 - 🔧 **Monitoring**: Health checks and comprehensive logging
 - 📊 **Validation**: Input sanitization and file size limits
 
@@ -37,7 +37,7 @@ src/
     __init__.py    # Package initialization
   app.py           # Application entry point
 pyproject.toml     # Modern Python project configuration
-Dockerfile         # Multi-stage production build
+Dockerfile         # Production-ready Docker build with path resolution
 uv.lock           # Dependency lock file
 ```
 
@@ -85,11 +85,30 @@ Open [http://localhost:7860](http://localhost:7860) in your browser
 
 ## 🐳 Docker Deployment
 
-AgriAssist is containerized for easy deployment anywhere! Uses pip and requirements.txt for maximum compatibility.
+✅ **Production Ready!** AgriAssist is fully containerized with automatic path resolution and pip-based dependencies for maximum compatibility.
+
+🔧 **Latest Updates:**
+- ✅ Fixed frontend path resolution for Docker environments
+- ✅ Automatic dev/production path detection
+- ✅ Optimized for cross-platform deployment
+- ✅ Comprehensive test script included
 
 📖 **Detailed Guide**: See [README-DOCKER.md](./README-DOCKER.md) for comprehensive Docker deployment instructions.
 
-### Quick Start
+### 🧪 Test Docker Setup
+```bash
+# Quick test with included script
+chmod +x test-docker.sh
+./test-docker.sh
+
+# This will:
+# - Build the image
+# - Check environment setup  
+# - Start container on port 7861
+# - Verify health endpoint
+```
+
+### 🚀 Quick Production Start
 ```bash
 # 1. Copy environment template and add your API keys
 cp sample.env .env
@@ -102,7 +121,7 @@ docker-compose up -d
 curl http://localhost:7860/health
 ```
 
-### Manual Docker Commands
+### 🔧 Manual Docker Commands
 ```bash
 # Build optimized production image
 docker build -t agriassist:latest .
@@ -117,12 +136,14 @@ docker run -d \
   agriassist:latest
 ```
 
-### Docker Compose (Recommended)
+### 🐳 Docker Features
 The included `docker-compose.yml` provides:
-- Environment variable management
-- Persistent audio file storage
-- Health checks and auto-restart
-- Production-ready configuration
+- ✅ **Smart Path Resolution** - Works in dev and production
+- ✅ **Environment Management** - Secure API key handling
+- ✅ **Persistent Storage** - Audio files preserved across restarts
+- ✅ **Health Monitoring** - Built-in health checks
+- ✅ **Auto-Restart** - Production-ready resilience
+- ✅ **Security First** - Non-root user execution
 
 ```bash
 # Copy environment file and add your API keys
@@ -175,6 +196,22 @@ uv run black .
 uv run pytest
 ```
 
+### 🐳 Docker Development
+Docker setup is fully production-ready with automatic path resolution:
+
+```bash
+# Quick test deployment
+./test-docker.sh
+
+# Development with hot reload
+docker-compose up --build
+
+# Production testing
+docker build -t agriassist . && docker run -p 7860:7860 agriassist
+```
+
+**Note**: All Docker path resolution issues have been resolved. The application automatically detects whether it's running in Docker or development mode.
+
 ### API Endpoints
 - `POST /api/query` - Submit farming queries
 - `GET /health` - Health check endpoint
@@ -197,7 +234,7 @@ The frontend features a premium, modern design with:
 - **Input Sanitization**: Prevents injection attacks
 - **CORS Protection**: Configurable allowed origins
 - **Security Headers**: Comprehensive security headers
-- **Non-root Execution**: Docker containers run as non-root user
+- **Non-root Execution**: Docker containers run as non-root user with automatic path resolution
 
 ## 🤝 Contributing
 
