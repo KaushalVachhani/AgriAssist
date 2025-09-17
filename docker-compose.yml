@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  agriassist:
+    build: .
+    ports:
+      - "7860:7860"
+    environment:
+      # Required API Keys (set these in your .env file or environment)
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      
+      # Optional Configuration
+      - APP_NAME=Farm AI Assistant
+      - DEBUG=false
+      - LOG_LEVEL=INFO
+      - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:7860,http://127.0.0.1:7860
+      - MAX_FILE_SIZE=10485760  # 10MB
+      - GEMINI_MODEL_NAME=gemini-2.5-flash
+      - WHISPER_MODEL_NAME=whisper-large-v3
+      - REQUESTS_PER_MINUTE=30
+    
+    volumes:
+      # Persist generated audio files
+      - audio_data:/app/agriassist/generated_speech_responses
+    
+    restart: unless-stopped
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7860/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  audio_data:
+    driver: local

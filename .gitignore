@@ -17,7 +17,7 @@ venv/
 Thumbs.db
 
 # Generated files
-src/generated_speech_responses/
+src/agriassist/generated_speech_responses/
 
 # Temp
 *.tmp

@@ -1,6 +1,20 @@
-python-dotenv>=0.9.0
+# Core Dependencies
+python-dotenv>=1.0.0
 google-generativeai>=0.8.5
 groq>=0.31.1
 gtts>=2.5.4
+
+# FastAPI and Web Framework
 fastapi>=0.110.0
 uvicorn[standard]>=0.29.0
+python-multipart>=0.0.9
+
+# API Rate Limiting and Security
+slowapi>=0.1.9
+
+# Data Validation and Settings
+pydantic>=2.7.0
+pydantic-settings>=2.3.0
+
+# File Operations
+aiofiles>=24.1.0

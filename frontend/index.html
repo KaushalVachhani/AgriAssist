@@ -3,9 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌾 Farm AI Assistant | खेत सहायक AI</title>
+    <meta name="description" content="AI-powered farming assistant providing expert agricultural advice through text, image, and audio inputs. Get instant solutions for your farming challenges.">
+    <meta name="keywords" content="farming, agriculture, AI assistant, crop advice, farming solutions, agricultural technology">
+    <meta name="author" content="AgriAssist Team">
+    <title>🌾 Farm AI Assistant | खेत सहायक AI - Expert Agricultural Guidance</title>
+    
+    <!-- Preconnect to Google Fonts for better performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Modern font stack for premium look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom styles -->
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Favicon and theme color -->
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
 </head>
 <body>
     <nav class="navbar">
@@ -13,34 +29,136 @@
         <div class="subtitle">खेत सहायक AI</div>
     </nav>
     <main>
-        <section class="card">
-            <h1>Ask Your Farming Question</h1>
-            <form id="queryForm">
-                <div class="form-group">
-                    <label for="textInput">Describe your farming issue:</label>
-                    <textarea id="textInput" name="text" placeholder="e.g., 'My tomato plant leaves are turning yellow.'"></textarea>
+        <div class="main-container">
+            <!-- Farm Image Section -->
+            <div class="image-section">
+                <div class="farm-image">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h2 class="overlay-title">🌾 स्मार्ट खेती</h2>
+                            <p class="overlay-subtitle">Smart Farming Solutions</p>
+                            <div class="overlay-stats">
+                                <div class="stat">
+                                    <span class="stat-number">1000+</span>
+                                    <span class="stat-label">Farmers Helped<br>किसान सहायता</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-number">24/7</span>
+                                    <span class="stat-label">AI Support<br>AI सहायता</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-number">95%</span>
+                                    <span class="stat-label">Success Rate<br>सफलता दर</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="imageInput">Upload an image of the plant (optional):</label>
-                    <input type="file" id="imageInput" name="image" accept="image/*">
+            </div>
+            
+            <!-- Form Section -->
+            <div class="form-section">
+                <div class="form-card">
+                    <h1 style="text-align: center;">🌱 Ask Your Farming Question<br><span class="hindi-title">अपना कृषि प्रश्न पूछें</span></h1>
+                    <!-- <p class="card-description">Get expert agricultural advice powered by AI<br><em>AI द्वारा संचालित विशेषज्ञ कृषि सलाह प्राप्त करें</em></p> -->
+                    
+                    <form id="queryForm">
+                        <div class="form-group">
+                            <label for="textInput">
+                                📝 Describe your farming issue • अपनी खेती की समस्या बताएं:
+                                <span class="label-hint">Tell us about your crop, soil, or farming challenge -- अपनी फसल, मिट्टी या खेती की चुनौती के बारे में बताएं</span>
+                            </label>
+                            <textarea 
+                                id="textInput" 
+                                name="text" 
+                                placeholder="e.g., 'My tomato plant leaves are turning yellow' or 'मेरे टमाटर के पत्ते पीले हो रहे हैं'"
+                                maxlength="5000">
+                            </textarea>
+                            <div id="textHelp" class="input-help">Maximum 5000 characters • अधिकतम 5000 अक्षर</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="imageInput">
+                                📸 Upload plant/crop image • पौधे/फसल की फोटो अपलोड करें (optional):
+                            </label>
+                            <input 
+                                type="file" 
+                                id="imageInput" 
+                                name="image" 
+                                accept="image/*">
+                            <div class="input-help">Upload a clear photo for better analysis • बेहतर विश्लेषण के लिए स्पष्ट फोटो अपलोड करें</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>
+                                🎤 Record your question • अपना प्रश्न रिकॉर्ड करें (optional):
+                                <span class="label-hint">Click to record directly or upload an audio file -- सीधे रिकॉर्ड करने के लिए क्लिक करें या ऑडियो फ़ाइल अपलोड करें</span>
+                            </label>
+                            
+                            <div class="audio-section">
+                                <div class="record-controls">
+                                    <button type="button" id="recordBtn" class="record-btn" title="Start Recording">
+                                        🎤
+                                    </button>
+                                    <span id="recordTime" class="record-time">00:00</span>
+                                </div>
+                                
+                                <div id="recordingStatus" class="input-help" style="margin: 8px 0;">
+                                    Click the microphone to start recording • रिकॉर्डिंग शुरू करने के लिए माइक्रोफोन पर क्लिक करें
+                                </div>
+                                
+                                <audio id="recordedAudio" controls style="display:none; width: 100%; margin-top: 16px;"></audio>
+                                
+                                <div style="margin-top: 16px;">
+                                    <input 
+                                        type="file" 
+                                        id="audioInput" 
+                                        name="audio" 
+                                        accept="audio/*"
+                                        style="display: none;">
+                                    <button type="button" onclick="document.getElementById('audioInput').click()" 
+                                            style="background: var(--bg-tertiary); color: var(--text-primary); width: auto; padding: 8px 16px; font-size: 0.875rem;">
+                                        Or upload audio file • या ऑडियो फ़ाइल अपलोड करें
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" id="submitBtn">
+                            🚀 Get Expert Solution • विशेषज्ञ समाधान प्राप्त करें
+                        </button>
+                        
+                        <div id="spinner" class="spinner" style="display:none;"></div>
+                    </form>
+                    
+                    <!-- Response Section Inside Form Card -->
+                    <div class="response-section" id="responseSection" style="display:none;">
+                        <div class="response-divider"></div>
+                        <h2>🎯 Expert Recommendation • विशेषज्ञ सिफारिश</h2>
+                        <div class="success-indicator" style="display:none;"></div>
+                        <div id="textResponse" class="response-text"></div>
+                        <audio id="audioResponse" controls style="display:none;">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <div class="input-help" id="audioHelp" style="display:none; margin-top: 12px;">
+                        </div>
+                        <button type="button" onclick="startNewQuery()" class="secondary-button" id="newQueryBtn" style="display:none;">
+                            Ask Another Question • दूसरा प्रश्न पूछें
+                        </button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="audioInput">Record your question (optional):</label>
-                    <input type="file" id="audioInput" name="audio" accept="audio/*">
-                </div>
-                <button type="submit" id="submitBtn">Get My Solution</button>
-                <div id="spinner" class="spinner" style="display:none;"></div>
-            </form>
-        </section>
-        <section class="card response-card">
-            <h2>AI Response</h2>
-            <div id="textResponse" class="response-text"></div>
-            <audio id="audioResponse" controls style="display:none;"></audio>
-        </section>
+            </div>
+        </div>
     </main>
     <footer>
-        <hr>
-        <p>Powered by AI for a greener future. | बेहतर भविष्य के लिए AI द्वारा संचालित।</p>
+        <div class="footer-content">
+            <p class="footer-text">
+                🌍 Powered by AI for a greener future | बेहतर भविष्य के लिए AI द्वारा संचालित
+            </p>
+            <p class="footer-subtext">
+                Supporting farmers worldwide with intelligent agricultural solutions
+            </p>
+        </div>
     </footer>
     <script src="main.js"></script>
 </body>

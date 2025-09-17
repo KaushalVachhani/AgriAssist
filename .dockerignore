@@ -1,0 +1,72 @@
+# Version control
+.git
+.gitignore
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.pytest_cache/
+*.egg-info/
+.mypy_cache/
+
+# Development files
+.env
+.env.local
+.env.*.local
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Build artifacts
+build/
+dist/
+*.tar.gz
+*.zip
+
+# Logs
+logs/
+*.log
+
+# Runtime data
+pids/
+*.pid
+*.seed
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# UV and Poetry files (since we're using pip now)
+uv.lock
+poetry.lock
+pyproject.toml
+
+# Test files
+tests/
+test_*
+
+# Temporary files
+tmp/
+temp/
